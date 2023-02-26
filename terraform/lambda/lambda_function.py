@@ -7,7 +7,7 @@ def lambda_handler(event, context):
     response = firehose_client.put_record(
         DeliveryStreamName='push-to-s3',
         Record={
-            'Data': json.dumps(event)
+            'Data': bytes(json.dumps(event["body"]).encode('utf-8'))
         }
     )
     return {
