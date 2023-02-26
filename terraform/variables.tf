@@ -13,3 +13,7 @@ variable "aws_region" {
 variable "aws_request_source_ip" {
   type = string
 }
+
+variable "aws_account_id" {
+  type = string
+}

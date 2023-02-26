@@ -120,27 +120,27 @@ resource "aws_iam_group" "user_group" {
 }
 
 resource "aws_iam_group_policy_attachment" "group_iam_attachment" {
-  group       = aws_iam_group.user_group.name
+  group      = aws_iam_group.user_group.name
   policy_arn = aws_iam_policy.iam_admin_policy_module.arn
 }
 
 resource "aws_iam_group_policy_attachment" "group_s3_attachment" {
-  group       = aws_iam_group.user_group.name
+  group      = aws_iam_group.user_group.name
   policy_arn = aws_iam_policy.s3_policy_module.arn
 }
 
 resource "aws_iam_group_policy_attachment" "group_cloudwatch_attachment" {
-  group       = aws_iam_group.user_group.name
+  group      = aws_iam_group.user_group.name
   policy_arn = aws_iam_policy.cloudwatch_logs_policy_module.arn
 }
 
 resource "aws_iam_group_policy_attachment" "group_lambda_attachment" {
-  group       = aws_iam_group.user_group.name
+  group      = aws_iam_group.user_group.name
   policy_arn = aws_iam_policy.lambda_policy_module.arn
 }
 
 resource "aws_iam_group_policy_attachment" "group_firehose_attachment" {
-  group       = aws_iam_group.user_group.name
+  group      = aws_iam_group.user_group.name
   policy_arn = aws_iam_policy.firehose_policy_module.arn
 }
 
