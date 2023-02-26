@@ -2,14 +2,14 @@ resource "local_file" "iam_policy" {
   content = templatefile("../iam/iam.json.tmpl", {
     source_ip = var.aws_request_source_ip
   })
-  filename = "${path.module}/parsed_iam.json"
+  filename = "${path.module}/parsed_policies/parsed_iam.json"
 }
 
 resource "local_file" "cloudwatch_logs_policy" {
   content = templatefile("../iam/cloudwatch_logs.json.tmpl", {
     source_ip = var.aws_request_source_ip
   })
-  filename = "${path.module}/parsed_cloudwatch_policy.json"
+  filename = "${path.module}/parsed_policies/parsed_cloudwatch_policy.json"
 }
 
 resource "local_file" "s3_policy" {
@@ -17,7 +17,7 @@ resource "local_file" "s3_policy" {
     source_ip = var.aws_request_source_ip,
     region    = var.aws_region
   })
-  filename = "${path.module}/parsed_s3.json"
+  filename = "${path.module}/parsed_policies/parsed_s3.json"
 }
 
 resource "local_file" "firehose_policy" {
@@ -25,7 +25,7 @@ resource "local_file" "firehose_policy" {
     source_ip = var.aws_request_source_ip,
     region    = var.aws_region
   })
-  filename = "${path.module}/parsed_kinesis_firehose.json"
+  filename = "${path.module}/parsed_policies/parsed_kinesis_firehose.json"
 }
 
 resource "local_file" "lambda_policy" {
@@ -33,7 +33,7 @@ resource "local_file" "lambda_policy" {
     source_ip = var.aws_request_source_ip,
     region    = var.aws_region
   })
-  filename = "${path.module}/parsed_lambda.json"
+  filename = "${path.module}/parsed_policies/parsed_lambda.json"
 }
 
 resource "aws_iam_policy" "iam_admin_policy_module" {
