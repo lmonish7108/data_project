@@ -7,7 +7,7 @@ resource "aws_kinesis_firehose_delivery_stream" "push_to_s3" {
     bucket_arn = aws_s3_bucket.kinesis_stream_data_bucket.arn
 
     buffer_interval = 60
-    buffer_size = 1
+    buffer_size     = 1
 
     processing_configuration {
       enabled = "true"

@@ -22,7 +22,7 @@ resource "local_file" "s3_policy" {
 
 resource "local_file" "firehose_policy" {
   content = templatefile("../templates/iam/kinesis_firehose.json.tmpl", {
-    region    = var.aws_region
+    region = var.aws_region
   })
   filename = "${path.module}/parsed_policies/parsed_kinesis_firehose.json"
 }
