@@ -1,19 +1,19 @@
 resource "local_file" "iam_policy" {
-  content = templatefile("../iam/iam.json.tmpl", {
+  content = templatefile("../templates/iam/iam.json.tmpl", {
     source_ip = var.aws_request_source_ip
   })
   filename = "${path.module}/parsed_policies/parsed_iam.json"
 }
 
 resource "local_file" "cloudwatch_logs_policy" {
-  content = templatefile("../iam/cloudwatch_logs.json.tmpl", {
+  content = templatefile("../templates/iam/cloudwatch_logs.json.tmpl", {
     source_ip = var.aws_request_source_ip
   })
   filename = "${path.module}/parsed_policies/parsed_cloudwatch_policy.json"
 }
 
 resource "local_file" "s3_policy" {
-  content = templatefile("../iam/s3.json.tmpl", {
+  content = templatefile("../templates/iam/s3.json.tmpl", {
     source_ip = var.aws_request_source_ip,
     region    = var.aws_region
   })
@@ -21,7 +21,7 @@ resource "local_file" "s3_policy" {
 }
 
 resource "local_file" "firehose_policy" {
-  content = templatefile("../iam/kinesis_firehose.json.tmpl", {
+  content = templatefile("../templates/iam/kinesis_firehose.json.tmpl", {
     source_ip = var.aws_request_source_ip,
     region    = var.aws_region
   })
@@ -29,7 +29,7 @@ resource "local_file" "firehose_policy" {
 }
 
 resource "local_file" "lambda_policy" {
-  content = templatefile("../iam/lambda.json.tmpl", {
+  content = templatefile("../templates/iam/lambda.json.tmpl", {
     source_ip = var.aws_request_source_ip,
     region    = var.aws_region
   })
