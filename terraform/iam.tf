@@ -22,7 +22,6 @@ resource "local_file" "s3_policy" {
 
 resource "local_file" "firehose_policy" {
   content = templatefile("../templates/iam/kinesis_firehose.json.tmpl", {
-    source_ip = var.aws_request_source_ip,
     region    = var.aws_region
   })
   filename = "${path.module}/parsed_policies/parsed_kinesis_firehose.json"
@@ -53,7 +52,7 @@ resource "aws_iam_policy" "cloudwatch_logs_policy_module" {
 }
 
 resource "aws_iam_policy" "firehose_policy_module" {
-  name        = "t_s3_admin"
+  name        = "t_firehose_admin"
   path        = "/"
   description = "Customer managed policy, should be deleted soon"
 
@@ -61,7 +60,7 @@ resource "aws_iam_policy" "firehose_policy_module" {
 }
 
 resource "aws_iam_policy" "s3_policy_module" {
-  name        = "t_lambda_admin"
+  name        = "t_s3_admin"
   path        = "/"
   description = "Customer managed policy, should be deleted soon"
 
@@ -69,7 +68,7 @@ resource "aws_iam_policy" "s3_policy_module" {
 }
 
 resource "aws_iam_policy" "lambda_policy_module" {
-  name        = "t_firehose_admin"
+  name        = "t_lambda_admin"
   path        = "/"
   description = "Customer managed policy, should be deleted soon"
 
@@ -103,6 +102,11 @@ resource "aws_iam_role_policy_attachment" "lambda_role_iam_attachment" {
 resource "aws_iam_role_policy_attachment" "lambda_role_s3_attachment" {
   role       = aws_iam_role.lambda_data_project_role.name
   policy_arn = aws_iam_policy.s3_policy_module.arn
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_role_firehose_attachment" {
+  role       = aws_iam_role.lambda_data_project_role.name
+  policy_arn = aws_iam_policy.firehose_policy_module.arn
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_role_cloudwatch_attachment" {
@@ -150,4 +154,28 @@ resource "aws_iam_user_group_membership" "user_group_attachment" {
   groups = [
     aws_iam_group.user_group.name
   ]
+}
+
+resource "aws_iam_role" "kinesis_data_project_role" {
+  name        = "firehose_data_project_role"
+  description = "Customer managed, should be deleted. Gives permissions to lambda for various data tasks."
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Sid    = ""
+        Principal = {
+          Service = "firehose.amazonaws.com"
+        }
+      },
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "firehose_role_s3_attachment" {
+  role       = aws_iam_role.kinesis_data_project_role.name
+  policy_arn = aws_iam_policy.s3_policy_module.arn
 }
