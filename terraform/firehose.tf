@@ -8,18 +8,5 @@ resource "aws_kinesis_firehose_delivery_stream" "push_to_s3" {
 
     buffer_interval = 60
     buffer_size     = 1
-
-    processing_configuration {
-      enabled = "true"
-
-      processors {
-        type = "Lambda"
-
-        parameters {
-          parameter_name  = "LambdaArn"
-          parameter_value = "${aws_lambda_function.push_to_kinesis.arn}:$LATEST"
-        }
-      }
-    }
   }
 }

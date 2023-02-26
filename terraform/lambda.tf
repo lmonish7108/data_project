@@ -19,4 +19,5 @@ resource "aws_lambda_function" "push_to_kinesis" {
   source_code_hash = data.archive_file.lambdazip.output_base64sha256
 
   runtime = "python3.8"
+  timeout = 60
 }
