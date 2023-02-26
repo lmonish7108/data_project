@@ -12,7 +12,7 @@ resource "aws_api_gateway_method" "lambda_post_method" {
   rest_api_id   = aws_api_gateway_rest_api.lambda_endpoint.id
   resource_id   = aws_api_gateway_resource.lambda_resource.id
   http_method   = "POST"
-  authorization = "NONE"
+  authorization = "AWS_IAM"
 }
 
 resource "aws_api_gateway_integration" "api_gw_lambda_integration" {
@@ -50,7 +50,14 @@ resource "aws_api_gateway_deployment" "api_gw_deployment" {
       aws_api_gateway_resource.lambda_resource.id,
       aws_api_gateway_method.lambda_post_method.id,
       aws_api_gateway_integration.api_gw_lambda_integration.id,
+      # If http authentication is changed we can list that trigger as well
+      aws_api_gateway_method.lambda_post_method.http_method,
+      aws_api_gateway_method.lambda_post_method.authorization,
     ]))
+  }
+
+  lifecycle {
+    create_before_destroy = true
   }
 }
 
