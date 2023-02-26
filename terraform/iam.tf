@@ -143,3 +143,11 @@ resource "aws_iam_group_policy_attachment" "group_firehose_attachment" {
   group       = aws_iam_group.user_group.name
   policy_arn = aws_iam_policy.firehose_policy_module.arn
 }
+
+resource "aws_iam_user_group_membership" "user_group_attachment" {
+  user = "data_project_user"
+
+  groups = [
+    aws_iam_group.user_group.name
+  ]
+}
