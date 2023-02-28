@@ -4,14 +4,11 @@
         {
             "Sid": "VisualEditor0",
             "Effect": "Allow",
-            "Action": "lambda:*",
+            "Action": "s3:*",
             "Resource": "*",
             "Condition": {
                 "StringEquals": {
-                    "aws:RequestedRegion": "${region}"
-                },
-                "IpAddress": {
-                    "aws:SourceIp": "${source_ip}"
+                    "aws:RequestedRegion": "${aws_region}"
                 }
             }
         }

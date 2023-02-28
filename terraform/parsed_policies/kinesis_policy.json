@@ -4,11 +4,14 @@
         {
             "Sid": "VisualEditor0",
             "Effect": "Allow",
-            "Action": "firehose:*",
+            "Action": [
+                "kinesis:*",
+                "firehose:*"
+            ],
             "Resource": "*",
             "Condition": {
                 "StringEquals": {
-                    "aws:RequestedRegion": "${region}"
+                    "aws:RequestedRegion": "eu-west-2"
                 }
             }
         }

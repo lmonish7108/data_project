@@ -4,11 +4,14 @@
         {
             "Sid": "VisualEditor0",
             "Effect": "Allow",
-            "Action": "logs:*",
+            "Action": [
+                "kinesis:*",
+                "firehose:*"
+            ],
             "Resource": "*",
             "Condition": {
-                "IpAddress": {
-                    "aws:SourceIp": "${source_ip}"
+                "StringEquals": {
+                    "aws:RequestedRegion": "${aws_region}"
                 }
             }
         }

@@ -3,7 +3,7 @@ resource "aws_api_gateway_rest_api" "lambda_endpoint" {
 }
 
 resource "aws_api_gateway_resource" "lambda_resource" {
-  path_part   = "resource"
+  path_part   = "upload"
   parent_id   = aws_api_gateway_rest_api.lambda_endpoint.root_resource_id
   rest_api_id = aws_api_gateway_rest_api.lambda_endpoint.id
 }

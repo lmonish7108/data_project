@@ -8,7 +8,7 @@
             "Resource": "*",
             "Condition": {
                 "StringEquals": {
-                    "aws:RequestedRegion": "${region}"
+                    "aws:RequestedRegion": "eu-west-2"
                 }
             }
         }
